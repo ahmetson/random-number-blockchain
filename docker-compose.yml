@@ -1,0 +1,45 @@
+version: "3.2"
+
+services:
+  starport:
+    build:
+      context: ./
+    container_name: "starport"
+    restart: 'always'
+    volumes:
+      - type: bind
+        source: .
+        target: /apps/
+      #- data-volume:/apps/
+    networks:
+      - net
+    entrypoint: bash
+    command: '-c "sleep 1d"'
+    ports:
+      - "12345:12345"
+      - "8080:8080"
+      - "4500:4500"
+      - "26657:26657"
+      - "1317:1317"
+  debian:
+    image: debian:9.13
+    container_name: "debian"
+    restart: 'always'
+    volumes:
+      - type: bind
+        source: .
+        target: /apps/
+    networks:
+      - net
+    entrypoint: bash
+    command: '-c "sleep 1d"'
+    ports:
+      - "12346:12345"
+      - "8081:8080"
+      - "4501:4500"
+      - "26658:26657"
+      - "1318:1317"
+networks:
+  net:
+volumes:
+  data-volume:
